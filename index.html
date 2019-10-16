@@ -17,14 +17,14 @@
 
 <body>
   <nav class="navbar navbar-expand-sm navbar-dark bg-success navbar-light">
-    <a class="navbar-brand" href="#">Quiz</a>
+ <!--   <a class="navbar-brand" href="#">Quiz</a>   -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">Quiz</span></a>
+<!--        <a class="nav-item nav-link active" href="quiz.html"> <span class="sr-only">Quiz</span></a>  -->
         <a class="nav-item nav-link" href="highScores.html">High Scores</a>
       </div>
     </div>
@@ -32,7 +32,8 @@
 
   <div class="container-fluid">
 
-    <h1 id="quizHeader" class="text-center">UNH Boot Camp Quiz</h1>
+    <h1 id="quizHeader" class="text-center">Timed Coding Quiz</h1>
+    <p class="text-center" id = "message">Welcome to the Timed Code Quiz!</p>
     <div class="row">
       <div class="col text-center">
 
@@ -41,6 +42,21 @@
       </div> <!-- end of column -->
     </div> <!-- end of row -->
 
+    
+    <div class="row">
+      <div class="col text-center">
+        <br>
+        <h2 id = "instructions"></h2>
+        <br>
+        <p><span id="question"></span></p>
+        <ul id="answer-list">
+          <li id="0"></li>
+          <li id="1"></li>
+          <li id="2"></li>
+          <li id="3"></li>
+        </ul>
+      </div> <!-- end of column -->
+    </div> <!-- end of row -->
   </div> <!-- end of container -->
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -50,6 +66,7 @@
   
   <script src="./assets/Javascript/questions.js" type="text/Javascript"></script>
   <script src="./assets/Javascript/quiz.js" type="text/Javascript"></script>
+  
 
 </body>
 

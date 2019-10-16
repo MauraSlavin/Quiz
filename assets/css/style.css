@@ -1,3 +1,7 @@
 #quizHeader {
     height: 100px;
 }
+
+#answer-list {
+    list-style: none;
+}
