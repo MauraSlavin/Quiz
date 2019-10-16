@@ -3,5 +3,7 @@
 }
 
 #answer-list {
-    list-style: none;
+    list-style-type: none;
+    width: 100px;
+    maring: auto;
 }
