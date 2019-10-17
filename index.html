@@ -17,14 +17,14 @@
 
 <body>
   <nav class="navbar navbar-expand-sm navbar-dark bg-success navbar-light">
- <!--   <a class="navbar-brand" href="#">Quiz</a>   -->
+    <!--   <a class="navbar-brand" href="#">Quiz</a>   -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-<!--        <a class="nav-item nav-link active" href="quiz.html"> <span class="sr-only">Quiz</span></a>  -->
+        <!--        <a class="nav-item nav-link active" href="quiz.html"> <span class="sr-only">Quiz</span></a>  -->
         <a class="nav-item nav-link" href="highScores.html">High Scores</a>
       </div>
     </div>
@@ -33,11 +33,8 @@
   <div class="container-fluid">
 
     <h1 id="quizHeader" class="text-center">Timed Coding Quiz</h1>
-    <p class="text-center" id = "message1">Welcome to the Timed Code Quiz!</p>
-    <p class="text-center" id="message2"></p>
-    <p class="text-center" id="message3"></p>
-    <br>
-    <p class="text-center" id="message4"></p>
+    <p class="text-center" id="message">Welcome to the Timed Code Quiz!</p>
+
     <div class="row">
       <div class="col text-center">
 
@@ -46,26 +43,34 @@
       </div> <!-- end of column -->
     </div> <!-- end of row -->
 
-    
+
     <div class="row">
       <div class="col text-center">
         <br>
         <p id="question"></p>
-        <ol id="answer-list">
-  <!--  items are added in js after quiz is started -->
-        </ol>
+   <!--      <div id="olDiv">  -->
+          <ol id="answer-list">
+            <!--  items are added in js after quiz is started -->
+          </ol>
+ <!--       </div> <!-- of olDiv -->   
       </div> <!-- end of column -->
     </div> <!-- end of row -->
   </div> <!-- end of container -->
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
-  
+
   <script src="./assets/Javascript/questions.js" type="text/Javascript"></script>
   <script src="./assets/Javascript/quiz.js" type="text/Javascript"></script>
-  
+
 
 </body>
 
