@@ -17,15 +17,15 @@
 
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-success">
-     <!--   <a class="navbar-brand" href="quiz.html">Quiz</a>  -->
+        <!--   <a class="navbar-brand" href="quiz.html">Quiz</a>  -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-               <a class="nav-item nav-link" href="index.html">Quiz</a> 
-     <!--           <a class="nav-item nav-link active" href="#">High Scores<span class="sr-only">Quiz</span></a>  -->
+                <a class="nav-item nav-link" href="index.html">Quiz</a>
+                <!--           <a class="nav-item nav-link active" href="#">High Scores<span class="sr-only">Quiz</span></a>  -->
             </div>
         </div>
     </nav>
@@ -33,24 +33,24 @@
     <div class="container-fluid">
 
         <h1 id="quizHeader" class="text-center">High Scores</h1>
-        <div id="score">No score, yet.</div>
-        <div class="row">
-            <div class="col text-center">
+        <div class="text-center" id="score">No score, yet.</div>
+        <div class="text-center">
+            <label for="inits">Please enter your initials:</label>
 
-                <!-- NO "TAKE THE QUIZ" BUTTON ON THIS PAGE -->
-                <!---  <button type="button" class="btn btn-success btn-lg id=" beginQuiz" class="text-center">Click to take
-          quiz</button>  -->
-            </div> <!-- end of column -->
-        </div> <!-- end of row -->
+            <input type="text" id="inits" name="inits" required minlength="2" size="10">
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
-    </div> <!-- end of container -->
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-    <script src="./assets/Javascript/questions.js" type="text/Javascript"></script>
-    <script src="./assets/Javascript/quiz.js" type="text/Javascript"></script>
+        <script src="./assets/Javascript/questions.js" type="text/Javascript"></script>
+        <script src="./assets/Javascript/quiz.js" type="text/Javascript"></script>
 
 </body>
 

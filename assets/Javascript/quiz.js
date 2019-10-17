@@ -1,14 +1,13 @@
-var timeLimit = 5; // 15 secs per question, 9 questions
+var timeLimit = 5; // (should be 15* questions.length) 15 secs per question
 var penaltyTime = 15; // lose 15 seconds for each wrong question.
 var timer = timeLimit; // start timer at timeLimit (time allotted).
-var $startQuiz = $("#beginQuiz");
 var message = "You have 15 seconds for each question, and will be penalized 15 seconds for each wrong answer.  Your score is the time left when you complete the quiz.  Click on the correct answer.";
 var currentQuestion = 0;
-var idIndex;   // id for each choice in the 
+var idIndex;   // id for each choice in the list of possible answers
 var question; // object with questions, choices, & correct answer for question currently being worked on
-var myTimer;  
+var myTimer;
+var promptForInits = false;  // so we know whether to prompt for initials when going to highScores page
 
-// $startQuiz = JSON.parse($startQuiz);
 
 
 function renderPage(question, questionNum) {
@@ -30,16 +29,20 @@ function renderPage(question, questionNum) {
 
 
 function endGame() {
-  clearInterval(myTimer);
+  clearInterval(myTimer);  // stop the timer
   timer = Math.max(0, timer);  // make sure timer is at least 0
-  var myText = "Your score is:  " + timer + ".";
-  alert(myText);
-  window.location = "./highScores.html";
- $("#score").text(myText);     //  **** This isn't working!!
+  localStorage.setItem("QUIZtimer", timer);  // save the timer before opening a new window
+  promptForInits = true;   // we will need to prompt for initials in highScores window
+  localStorage.setItem("QUIZinits", promptForInits);  // save promptForInits before opening a new window
+  // var myText = "Your score is:  " + timer + ".";
+  // alert(myText);
+  
+  window.open("./highScores.html", "_self")  // go to highScores page
 
 };
 
 $(document).ready(function () {
+
   // when take quiz button pressed..
   $("#beginQuiz").click(
     function () {
@@ -104,7 +107,7 @@ $(document).ready(function () {
         } // end of if
         else {
           $("#message").text("Sorry, wrong answer.  " + penaltyTime + " seconds will be deducted from your time.");
-          timer = Math.max(timer - penaltyTime,0); // timer can't be less than 0
+          timer = Math.max(timer - penaltyTime, 0); // timer can't be less than 0
         };  //end of else
         currentQuestion++;
         renderPage(questions[currentQuestion], currentQuestion);
@@ -160,6 +163,17 @@ $(document).ready(function () {
 
     }); // of BeginQuiz function
 
+  var isScoresPage = window.location.pathname.includes("highScores");
+  if (isScoresPage) {
+    timer = localStorage.getItem("QUIZtimer");    // retrieve timer (score) from local storage
+    $("#score").text("Your score is: " + timer);     //  Display the user's score
+    // retrieve promptForInits (key is QUIZinits) from local storage; convert to Boolean (using == "true")
+    promptForInits = localStorage.getItem("QUIZinits") == "true";   
+    if (promptForInits) {
+      // build html to prompt for initials and return value
+      
+    }
+  }
 
 
 }); // end of document ready

@@ -49,4 +49,6 @@ p, #score {
 
 #score {
     height: 30px;
+    font-weight: bold;
+    margin: 20px;
 }
