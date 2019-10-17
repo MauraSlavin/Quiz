@@ -1,9 +1,31 @@
 #quizHeader {
     height: 100px;
+    font-style: italic;
+    text-decoration-style: wavy;
+}
+
+#answer-list, #question {
+    margin: auto;
+    color: green;
+    font-weight: bold;;
 }
 
 #answer-list {
-    list-style-type: none;
-    width: 100px;
-    maring: auto;
+    width: 200px;
+    text-align: left;
+    margin-top: 20px;
+    
+}
+
+
+p {
+    color: green;
+    font-size: 18px;
+    height: 1.25em;
+    margin: auto;
+    padding: 0;
+}
+
+body {
+    background-color:rgb(157, 241, 157) ;
 }
