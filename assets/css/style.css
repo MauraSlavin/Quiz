@@ -2,6 +2,11 @@ body {
     background-image: url("../images/wood.jpg");
 }
 
+.hover {
+    color: white;
+    background-color: green;
+}
+
 #message {
     width: 50%;
 }

@@ -54,7 +54,38 @@ $(document).ready(function () {
 
       renderPage(questions[currentQuestion]);
 
+      $( "#0" ).hover(
+        function() {
+          $( this ).addClass( "hover" );
+        }, function() {
+          $( this ).removeClass( "hover" );
+        }
+      );
 
+      $( "#1" ).hover(
+        function() {
+          $( this ).addClass( "hover" );
+        }, function() {
+          $( this ).removeClass( "hover" );
+        }
+      );
+
+      $( "#2" ).hover(
+        function() {
+          $( this ).addClass( "hover" );
+        }, function() {
+          $( this ).removeClass( "hover" );
+        }
+      );
+
+      $( "#3" ).hover(
+        function() {
+          $( this ).addClass( "hover" );
+        }, function() {
+          $( this ).removeClass( "hover" );
+        }
+      );
+      
       $("#0").click(function (event) {
         event.preventDefault();
         event.stopPropagation();
