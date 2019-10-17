@@ -1,5 +1,5 @@
 body {
-    background-image: url("../images/wood.jpg");
+    background-image: url("../images/Wood.jpg");
 }
 
 .hover {
@@ -39,9 +39,14 @@ body {
 }
 
 
-p {
+p, #score {
     color: green;
     font-size: 22px;
     margin: auto;
     padding: 0;
+    text-align: center;
+}
+
+#score {
+    height: 30px;
 }
