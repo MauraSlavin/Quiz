@@ -52,3 +52,12 @@ p, #score {
     font-weight: bold;
     margin: 20px;
 }
+
+.high-score {
+    height: 1.5em;
+    color: green;
+    font-weight: bold;
+    font-size: 14px;
+    margin: auto;
+    text-align: center;
+}
