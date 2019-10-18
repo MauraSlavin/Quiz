@@ -1,4 +1,4 @@
-var timeLimit = 5; // 15 * questions.length; // (should be 15* questions.length) 15 secs per question
+var timeLimit = 15 * questions.length; // (should be 15* questions.length) 15 secs per question
 var penaltyTime = 15; // lose 15 seconds for each wrong question.
 var message = "You have 15 seconds for each question, and will be penalized 15 seconds for each wrong answer.  Your score is the time left when you complete the quiz.  Click on the correct answer.";
 var currentQuestion = 0;  // the question that is currently being asked/evaluated.
@@ -8,12 +8,13 @@ var isScoresPage = window.location.pathname.includes("highScores");  // is the h
 var timer = timeLimit;  // set timer to the timelimite
 var gameNo = [];  // will have highest game number for each player (so new game will be stored with a higher gamenum)
 var inits = [];  // will have inits for each player (indicies correspond to gameNo array)
+var highScores = [];  // high score for each player
 
 // for testing...
 
-localStorage.setItem("QUIZ000001mms", "10");
-localStorage.setItem("QUIZ000002mms", "95");
-localStorage.setItem("QUIZ000002dns", "135");
+// localStorage.setItem("QUIZ000001mms", "10");
+//localStorage.setItem("QUIZ000002mms", "95");
+// localStorage.setItem("QUIZ000002dns", "135");
 
 
 function renderPage(question, questionNum) {   // change question and answer choices on Quiz page
@@ -195,25 +196,25 @@ $(document).ready(function () {     // when page is finished loading
         if (newInitPos == -1) {  // first time we come across these initials
           inits.push(init);
           gameNo.push(parseInt(keys[key].substr(4, 6)));   // game number is in positions 4 - 9
+          highScores.push(parseInt(values[key]));
           scores[init] = [values[key], []];  // add the new key with the first score
         } // of init NOT in inits (new initials)
         else if ((scores[init][newInitPos].length != 0)) {  // skip null enteries
           // if these inits are already in Score, then push the new score onto that element
           scores[init].push(values[key]);
           gameNo[newInitPos] = Math.max(gameNo[newInitPos], currGameNo);
+          highScores[newInitPos] = Math.max(highScores[newInitPos], parseInt(values[key]));
         };  // of already saw these initials & not null
       }; // else QUIZ gameNum score record
     };  // for each row read from local Storage
 
     //  number of objects:   Object.keys(scores).length;
-    console.log("scores: " + scores);
-    console.log("inits:  " + inits);
-    console.log("gameNo: " + gameNo);
-    for (key = 0; key < Object.keys(scores).length; key++) {
-      console.log("Key:  " + key);
-      console.log(scores.key);
 
-    };   // of for each object in scores
+   // for (key = 0; key < Object.keys(scores).length; key++) {
+     // console.log("Key:  " + key);
+      //console.log(scores.key);
+
+   // };   // of for each object in scores
 
 
 
@@ -229,13 +230,17 @@ $(document).ready(function () {     // when page is finished loading
         if (keycode == 13) {
           console.log(event.which);  // 13 is enter
           init = $("#initInput").val();  // get inits from input 
-          $("#initInput").attr("value", "");  //  clear input field
+          $("#initInput[type=text], textarea").val("");  //  clear input field
+      
           if (inits.indexOf(init) == -1) {  // first game for these inits
             localStorage.setItem("QUIZ000001" + inits, timer.toString());
           }
           else {             // get correct game number - not first time player!
             // add one to gameNo, format as 6 chars with leading 0s; append timer
-            localStorage.setItem("QUIZ" + ("000000" + (gameNo[inits.indexOf(init)] + 1).substr(-6, 6)) + init, parseInt(timer));
+            // key is "QUIZ" + six digit game number (left padded w 0s) + initials
+            var keyText = ("000000"+(gameNo[inits.indexOf(init)]+1)).substr(-6,6);
+            var keyText = "QUIZ" + keyText + init;
+            localStorage.setItem(keyText, timer.toString());
           };   // of else - not first game
           //  *****  need gameNum, and concatenate "QUIZ" & game No
 
@@ -248,22 +253,21 @@ $(document).ready(function () {     // when page is finished loading
     };  // of if promptForInits
 
     // display high scores
+    var h2HighScore = $("<h2>");
+    h2HighScore.addClass("high-score-header");
+    h2HighScore.text("High Scores");
+    $("body").append(h2HighScore);
     for (var key = 0; key < inits.length; key++) {
       var scoreDiv = $("<div>");
       scoreDiv.addClass("high-score");
-      scoreDiv.text(inits[key] + ":  " + scores[inits[key]]);
+      scoreDiv.text(inits[key] + ":  " + highScores[key]);
       $("body").append(scoreDiv);
     };  // of loop to append previous scores
 
   };   // if high Scores page (isScoresPage)
 
 }); // end of document ready
-  // stop timer
-  // display score
-  // ask for inits
-  // store score for hi-score list
 
-  // finish taking quiz
-  //  display score
-
-  //// then - add timer and high score functions
+//timer on page
+//clear highscores
+// HIGH score

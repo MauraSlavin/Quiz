@@ -53,11 +53,18 @@ p, #score {
     margin: 20px;
 }
 
-.high-score {
+.high-score, .high-score-header {
     height: 1.5em;
-    color: green;
+    color: darkgreen;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 20px;
     margin: auto;
     text-align: center;
+}
+
+.high-score-header {
+    font-size: 25px;
+    height: 2em;
+    margin-top: 40px;
+    text-decoration: underline;
 }
