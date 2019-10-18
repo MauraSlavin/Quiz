@@ -210,11 +210,11 @@ $(document).ready(function () {     // when page is finished loading
 
     //  number of objects:   Object.keys(scores).length;
 
-   // for (key = 0; key < Object.keys(scores).length; key++) {
-     // console.log("Key:  " + key);
-      //console.log(scores.key);
+    // for (key = 0; key < Object.keys(scores).length; key++) {
+    // console.log("Key:  " + key);
+    //console.log(scores.key);
 
-   // };   // of for each object in scores
+    // };   // of for each object in scores
 
 
 
@@ -231,20 +231,23 @@ $(document).ready(function () {     // when page is finished loading
           console.log(event.which);  // 13 is enter
           init = $("#initInput").val();  // get inits from input 
           $("#initInput[type=text], textarea").val("");  //  clear input field
-      
+
+
           if (inits.indexOf(init) == -1) {  // first game for these inits
             localStorage.setItem("QUIZ000001" + inits, timer.toString());
           }
           else {             // get correct game number - not first time player!
             // add one to gameNo, format as 6 chars with leading 0s; append timer
             // key is "QUIZ" + six digit game number (left padded w 0s) + initials
-            var keyText = ("000000"+(gameNo[inits.indexOf(init)]+1)).substr(-6,6);
+            var keyText = ("000000" + (gameNo[inits.indexOf(init)] + 1)).substr(-6, 6);
             var keyText = "QUIZ" + keyText + init;
             localStorage.setItem(keyText, timer.toString());
           };   // of else - not first game
-          //  *****  need gameNum, and concatenate "QUIZ" & game No
 
 
+          // remove high score message from page
+          $("#score").remove();
+          $("#pleaseEnter").remove();
 
 
 
