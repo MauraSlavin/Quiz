@@ -39,7 +39,7 @@ body {
 }
 
 
-p, #score {
+p, #score, #pleaseEnter {
     color: green;
     font-size: 22px;
     margin: auto;
@@ -51,11 +51,12 @@ p, #score {
     text-align: right;
 }
 
-#score {
+#score, #pleaseEnter {
     height: 30px;
     font-weight: bold;
     margin: 20px;
 }
+
 
 .high-score, .high-score-header {
     height: 1.5em;
@@ -71,4 +72,8 @@ p, #score {
     height: 2em;
     margin-top: 40px;
     text-decoration: underline;
+}
+
+#initInput, #initInput2 {
+    text-align: center;
 }
