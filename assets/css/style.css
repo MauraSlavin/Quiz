@@ -47,6 +47,10 @@ p, #score {
     text-align: center;
 }
 
+#timer {
+    text-align: right;
+}
+
 #score {
     height: 30px;
     font-weight: bold;

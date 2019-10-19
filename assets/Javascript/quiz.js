@@ -1,6 +1,8 @@
 var timeLimit = 15 * questions.length; // (should be 15* questions.length) 15 secs per question
 var penaltyTime = 15; // lose 15 seconds for each wrong question.
-var message = "You have 15 seconds for each question, and will be penalized 15 seconds for each wrong answer.  Your score is the time left when you complete the quiz.  Click on the correct answer.";
+var instructions = "You have 15 seconds for each question, and will be penalized 15 seconds for each wrong answer.  Your score is the time left when you complete the quiz.  Click on the correct answer.";
+var wrongAnsMsg = "Sorry, wrong answer.  Your timer has been penalized by " + penaltyTime + ".  Better luck on this next question.";
+var rightAnsMsg = "Yay!!  Right answer!  Here's the next question.";
 var currentQuestion = 0;  // the question that is currently being asked/evaluated.
 var question; // object with question, choices, & correct answer for question currently being worked on
 var myTimer;   // used with countdown timer
@@ -12,9 +14,9 @@ var highScores = [];  // high score for each player
 
 // for testing...
 
-// localStorage.setItem("QUIZ000001mms", "10");
-//localStorage.setItem("QUIZ000002mms", "95");
-// localStorage.setItem("QUIZ000002dns", "135");
+localStorage.setItem("QUIZ000001mms", "10");
+localStorage.setItem("QUIZ000002mms", "95");
+localStorage.setItem("QUIZ000002dns", "135");
 
 
 function renderPage(question, questionNum) {   // change question and answer choices on Quiz page
@@ -46,11 +48,14 @@ $(document).ready(function () {     // when page is finished loading
   // when take quiz button pressed..
   $("#beginQuiz").click(function () {
     $("#beginQuiz").remove();  // remove "take quiz button"
-    $("#message").text(message);  // change the message on the page from welcome to quiz instructions
+    $("#message").text(instructions);  // change the message on the page from welcome to quiz instructions
 
     // start timer to countdown every second
     myTimer = setInterval(function () {
       timer--;
+      var minutes = Math.floor(timer / 60);
+      var seconds = timer - minutes * 60;
+      $("#timer").text("Timer: " + minutes + ":" + seconds);
     }, 1000);
 
     // end game when time is up  (use clearinterval to stop timer if game ends before time is up)
@@ -102,10 +107,10 @@ $(document).ready(function () {     // when page is finished loading
       event.preventDefault();
       event.stopPropagation();
       if (questions[currentQuestion].answer == 0) {
-        $("#message").text("Yay!  That was the correct answer!");
+        $("#message").text(rightAnsMsg);
       } // end of if
       else {
-        $("#message").text("Sorry, wrong answer.  " + penaltyTime + " seconds will be deducted from your time.");
+        $("#message").text(wrongAnsMsg);
         timer = Math.max(timer - penaltyTime, 0); // timer can't be less than 0
       };  //end of else
       currentQuestion++;
@@ -117,10 +122,10 @@ $(document).ready(function () {     // when page is finished loading
       event.preventDefault();
       event.stopPropagation();
       if (questions[currentQuestion].answer == 1) {
-        $("#message").text("Yay!  That was the correct answer!");
+        $("#message").text(rightAnsMsg);
       } // end of if
       else {
-        $("#message").text("Sorry, wrong answer.  " + penaltyTime + " seconds will be deducted from your time.");
+        $("#message").text(wrongAnsMsg);
         timer = Math.max(timer - penaltyTime, 0); // timer can't be less than 0
       };  // end of else
       currentQuestion++;
@@ -132,10 +137,10 @@ $(document).ready(function () {     // when page is finished loading
       event.preventDefault();
       event.stopPropagation();
       if (questions[currentQuestion].answer == 2) {
-        $("#message").text("Yay!  That was the correct answer!");
+        $("#message").text(rightAnsMsg);
       } // end of if
       else {
-        $("#message").text("Sorry, wrong answer.  " + penaltyTime + " seconds will be deducted from your time.");
+        $("#message").text(wrongAnsMsg);
         timer = Math.max(timer - penaltyTime, 0); // timer can't be less than 0
       };  // end of else
       currentQuestion++;
@@ -147,10 +152,10 @@ $(document).ready(function () {     // when page is finished loading
       event.preventDefault();
       event.stopPropagation();
       if (questions[currentQuestion].answer == 3) {
-        $("#message").text("Yay!  That was the correct answer!");
+        $("#message").text(rightAnsMsg);
       } // end of if
       else {
-        $("#message").text("Sorry, wrong answer.  " + penaltyTime + " seconds will be deducted from your time.");
+        $("#message").text(wrongAnsMsg);
         timer = Math.max(timer - penaltyTime, 0); // timer can't be less than 0
       };  //end of else
       currentQuestion++;
