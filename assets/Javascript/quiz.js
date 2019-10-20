@@ -8,8 +8,7 @@ var question; // object with question, choices, & correct answer for question cu
 var myTimer;   // used with countdown timer
 var isScoresPage = window.location.pathname.includes("highScores");  // is the highScores page displayed?
 var timer = timeLimit;  // set timer to the timelimite
-var gameNo = [];  // will have highest game number for each player (so new game will be stored with a higher gamenum)
-var inits = [];  // will have inits for each player (indicies correspond to gameNo array)
+var inits = [];  // will have inits for each player
 var highScores = [];  // high score for each player
 var quizPage = localStorage.getItem("QUIZpage");  // 0: home page; 1: high scores; 2: score w/prompt for initials
 if (quizPage == null) { quizPage = 0; };  // the home page is the default if nothing is stored.
@@ -103,8 +102,10 @@ $(document).ready(function () {     // when page is finished loading
     // start timer to countdown every second
     myTimer = setInterval(function () {
       timer--;
-      var minutes = Math.floor(timer / 60);
-      var seconds = timer - minutes * 60;
+
+      var minutes = (Math.floor(timer / 60)).toString();
+      var seconds = (timer - minutes * 60).toString();
+      seconds = seconds.padStart(2, "0");
       $("#timer").text("Timer: " + minutes + ":" + seconds);
     }, 1000);
 
@@ -227,9 +228,7 @@ $(document).ready(function () {     // when page is finished loading
     var
       keys = Object.keys(localStorage),  // array with all the keys in it
       values = Object.values(localStorage),  // array with all the corresponding properties in it
-      init,         // initials in current local Storage entry most recently read
-      scores = {},  // object; key is inits, property is  array of scores; highest score first.
-      currGameNo = 0;  // currently read in game number.  Increment whne storing new score.
+      init;        // initials in current local Storage entry most recently read
 
 
 
@@ -393,7 +392,7 @@ $(document).ready(function () {     // when page is finished loading
         }
         else {            //  not first score saved for this user
           // get correct game number - not first time player!
-          // add one to gameNo, format as 6 chars with leading 0s; append timer
+
           // key is "QUIZ" + six digit game number (left padded w 0s) + initials
           var oldHighScore = localStorage.getItem("QUIZ" + init);
           if (timer > oldHighScore) {
