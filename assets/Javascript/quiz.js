@@ -356,16 +356,42 @@ $(document).ready(function () {     // when page is finished loading
       });   // of event listener for keydown (13)
     };  // of if promptForInits
 
+
+    //  Put scores in order of High score first:  
+    //  inits & highScores arrays changed; 
+    //  orderOfScores created (index into both arrays in order, highest score first.)
+
+  
+    var tempHighScores = highScores;
+    var tempInits = inits;
+    var maxIndex = highScores.length;
+    var newHighScores = new Array(maxIndex);
+    var newInits = new Array(maxIndex);
+    var index;
+  
+    for (var i = 0; i < maxIndex; i++) {
+      index = tempHighScores.indexOf(Math.max.apply(null,tempHighScores));
+      newHighScores[i] = Math.max(...tempHighScores);
+      newInits[i] = tempInits[index];
+      tempHighScores.splice(index,1);
+      tempInits.splice(index,1);
+     };   //  of for i 0 to length of highScores & closes anoymous function
+
+    
+
+
+
+
     if ((quizPage == 1) || (quizPage == 2)) {
       // display high scores
       var h2HighScore = $("<h2>");
       h2HighScore.addClass("high-score-header");
       h2HighScore.text("High Scores");
       $("body").append(h2HighScore);
-      for (var key = 0; key < inits.length; key++) {
+      for (var key = 0; key < maxIndex; key++) {
         var scoreDiv = $("<div>");
         scoreDiv.addClass("high-score");
-        scoreDiv.text(inits[key] + ":  " + highScores[key]);
+        scoreDiv.text(newInits[key] + ":  " + newHighScores[key]);
         $("body").append(scoreDiv);
       };  // of loop to append previous scores
     };  // of quizPage == 1 or 2 then display high scores
