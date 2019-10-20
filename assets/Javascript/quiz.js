@@ -22,17 +22,12 @@ if (isScoresPage && (quizPage == 0)) {
 };   // of if 
 
 if ((quizPage == 0) || (quizPage == 1)) {    // don't display score or prompt for inits unless needed.
-//  alert("Line 25:  Hide score & prompt; quizPage: " + quizPage);
+  //  alert("Line 25:  Hide score & prompt; quizPage: " + quizPage);
   console.log("Line 25:  Hide score & prompt; quizPage: " + quizPage);
   $("#score").hide();
   $("#pleaseEnter").hide();
-}
-else {
-//  alert("Line 31:  SHOW score & prompt; quizPage: " + quizPage);
-  console.log("Line 31:  SHOW score & prompt; quizPage: " + quizPage);
-  $("#score").show();
-  $("#pleaseEnter").show();
 };
+
 
 // show timer as not running, since Quiz is not in progress
 $("#timer").text("Timer not running; quiz not in progress.");
@@ -212,44 +207,6 @@ $(document).ready(function () {     // when page is finished loading
       scores = {},  // object; key is inits, property is  array of scores; highest score first.
       currGameNo = 0;  // currently read in game number.  Increment whne storing new score.
 
-    // show score & prompt for initials if needed
-    if (quizPage == 2) {   // prompt for inits needed (also show score)
-      //  $("#score").show();
-      //  $("#pleaseEnter").show();
-      //  alert("css is about to be changed");
- //     alert("Line 214:  SHOW score & prompt; quizPage: " + quizPage);
-      console.log("Line 214:  SHOW score & prompt; quizPage: " + quizPage);
-      $("#score").show();
-      $("#pleaseEnter").show();
-     // $("#score").style.removeProperty("display");
-//      $("#pleaseEnter").style.removeProperty("display");
-  //    $("#score").css("display", "block");
-      //     $("#initInput1").css("display", "block");
-      //   $("#initInput1").css("display", "block");
-  //    $("#pleaseEnter").css("display", "block");
-    }   // of quizPage = 1 or 2 (prompt for inits & show score)
-    
-    else if ((quizPage == 0) || (quizPage == 1)) {                      // show neither score nor prompt for inits
- //     alert("Line 225:  Hide score & prompt; quizPage: " + quizPage);
-      console.log("Line 225:  Hide score & prompt; quizPage: " + quizPage);
-      $("#score").hide();
-      $("#pleaseEnter").hide();      
-      //  $("#score").hide();
-      //  $("#pleaseEnter").hide();
-      //  $("#pleaseEnter").css("display","none");
-//      $("#score").style.removeProperty("display");
-  //    $("#pleaseEnter").style.removeProperty("display");
-    //  alert("css is about to be changed");
-      //$("#score").css("display", "none");
- //     $("#initInput1").css("display", "none");
-   //   $("#initInput").css("display", "none");
-//      $("#pleaseEnter").css("display", "none");
-    }          // of quizPage = 0... no prompt or inits
-
-    else {   // should never get here
- //     alert("ERROR:  quizPage should be 0, 1, or 2.\nquizPage:  " + quizPage + "\nline 204 of quiz.js.");
-
-    };
 
 
     // of else no prompt for inits
@@ -267,6 +224,44 @@ $(document).ready(function () {     // when page is finished loading
       if (keys[key].startsWith("QUIZtimer")) {  // timer (score) for current player
         timer = values[key];
         localStorage.removeItem("QUIZtimer");  // timer is no longer needed in localStorage
+        // show score & prompt for initials if needed, now that the timer is retrieved from localStorage
+        if (quizPage == 2) {   // prompt for inits needed (also show score)
+          //  $("#score").show();
+          //  $("#pleaseEnter").show();
+          //  alert("css is about to be changed");
+          //     alert("Line 214:  SHOW score & prompt; quizPage: " + quizPage);
+          console.log("Line 214:  SHOW score & prompt; quizPage: " + quizPage);
+          $("#score").text("Your score is: " + timer).show();
+          $("#pleaseEnter").show();
+          // $("#score").style.removeProperty("display");
+          //      $("#pleaseEnter").style.removeProperty("display");
+          //    $("#score").css("display", "block");
+          //     $("#initInput1").css("display", "block");
+          //   $("#initInput1").css("display", "block");
+          //    $("#pleaseEnter").css("display", "block");
+        }   // of quizPage = 1 or 2 (prompt for inits & show score)
+
+        else if ((quizPage == 0) || (quizPage == 1)) {                      // show neither score nor prompt for inits
+          //     alert("Line 225:  Hide score & prompt; quizPage: " + quizPage);
+          console.log("Line 225:  Hide score & prompt; quizPage: " + quizPage);
+          $("#score").hide();
+          $("#pleaseEnter").hide();
+          //  $("#score").hide();
+          //  $("#pleaseEnter").hide();
+          //  $("#pleaseEnter").css("display","none");
+          //      $("#score").style.removeProperty("display");
+          //    $("#pleaseEnter").style.removeProperty("display");
+          //  alert("css is about to be changed");
+          //$("#score").css("display", "none");
+          //     $("#initInput1").css("display", "none");
+          //   $("#initInput").css("display", "none");
+          //      $("#pleaseEnter").css("display", "none");
+        }          // of quizPage = 0... no prompt or inits
+
+        else {   // should never get here
+          //     alert("ERROR:  quizPage should be 0, 1, or 2.\nquizPage:  " + quizPage + "\nline 204 of quiz.js.");
+
+        };
       }  // of if QUIZtimer key
 
 
@@ -311,9 +306,8 @@ $(document).ready(function () {     // when page is finished loading
 
 
     //  timer = localStorage.getItem("QUIZtimer");    // retrieve timer (score) from local storage
-  //  alert("Line 308:  SHOW score & prompt; quizPage: " + quizPage);
+    //  alert("Line 308:  SHOW score & prompt; quizPage: " + quizPage);
     //console.log("Line 309:  SHOW score & prompt; quizPage: " + quizPage);
-    //$("#score").text("Your score is: " + timer).show();     //  Display the player's score
     //$("#pleaseEnter").show();
 
     // if needed, display score and prompt for inits; and display high scores.
@@ -321,12 +315,12 @@ $(document).ready(function () {     // when page is finished loading
       // build html to prompt for initials and return value
 
       //    $("#pleaseEnter").show();    //  show prompt for initials
-   //   alert("css is about to be changed");
-   $("#score").show();
-   $("#pleaseEnter").show();
- //     $("#initInput").css("display", "block");    //  show prompt for initials
-   //   $("#initInput2").css("display", "block");    //  show prompt for initials
-     // $("#pleaseEnter").css("display", "block");
+      //   alert("css is about to be changed");
+      $("#score").show();
+      $("#pleaseEnter").show();
+      //     $("#initInput").css("display", "block");    //  show prompt for initials
+      //   $("#initInput2").css("display", "block");    //  show prompt for initials
+      // $("#pleaseEnter").css("display", "block");
       document.addEventListener("keydown", function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == 13) {
@@ -350,10 +344,11 @@ $(document).ready(function () {     // when page is finished loading
           };   // of else - not first game
 
 
-          // hide score message from page
-      //    $("#score").hide();
-        //  $("#initInput").hide();
-          //$("#initInput1").hide();
+          // hide score message from page, since we have the input!
+          $("#score").hide();
+          $("#pleaseEnter").hide();
+
+          // add new score to High Scores
 
 
 
