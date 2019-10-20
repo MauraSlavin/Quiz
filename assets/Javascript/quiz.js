@@ -19,7 +19,7 @@ localStorage.removeItem("QUIZpage");    // no longer need
 function endGame() {       // prep to display page with player's score and score history
   clearInterval(myTimer);  // stop the timer
   timer = Math.max(0, timer);  // make sure timer is at least 0
-  localStorage.setItem("QUIZtimer", timer);  // save the timer before opening a new window
+  localStorage.setItem("QUIZtimer", timer.toString());  // save the timer before opening a new window
   localStorage.setItem("QUIZpage", 2);  // "remember" to prompt for inits when new window is opened
 
 
@@ -157,6 +157,9 @@ $(document).ready(function () {     // when page is finished loading
       values = Object.values(localStorage),  // array with all the corresponding properties in it
       init;        // initials in current local Storage entry most recently read
 
+    // only display "Clear Highscores" button when displaying the High Scores
+    $("#clearScores").show();
+
     // for every key / value combination read in from localStorage - build array of keys & corresponding array of values
     for (var key = 0; key < keys.length; key++) {  // for each row of data in localStorage
 
@@ -207,6 +210,9 @@ $(document).ready(function () {     // when page is finished loading
       values = Object.values(localStorage),  // array with all the corresponding properties in it
       init;         // initials in current local Storage entry most recently read
 
+    // only display "Clear Highscores" button when displaying the High Scores
+    $("#clearScores").hide();
+
     // for every key / value combination read in from localStorage - build array of keys & corresponding array of values
     for (var key = 0; key < keys.length; key++) {  // for each row of data in localStorage
 
@@ -222,7 +228,7 @@ $(document).ready(function () {     // when page is finished loading
     };  // for each row read from local Storage
 
     // timer is retrieved from localStorage, then deleted from localStorage to avoid confusion
-    timer = localStorage.getItem("QUIZtimer")
+    timer = parseInt(localStorage.getItem("QUIZtimer"));
     localStorage.removeItem("QUIZtimer");  // timer is no longer needed in localStorage
 
     // show score & prompt for initials if needed, now that the timer is retrieved from localStorage
@@ -244,7 +250,7 @@ $(document).ready(function () {     // when page is finished loading
         else {            //  not first score saved for this user
 
           // only store if it is a new high score for this player
-          var oldHighScore = localStorage.getItem("QUIZ" + init);
+          var oldHighScore = parseInt(localStorage.getItem("QUIZ" + init));
           if (timer > oldHighScore) {
             localStorage.setItem("QUIZ" + init, timer.toString());
           };
@@ -260,7 +266,7 @@ $(document).ready(function () {     // when page is finished loading
   };     // of if QUIZpage is 2
 
 
-  
+
   // when "Clear Scores" button is pressed, clear out the localStorage and remove elements from page that have high scores
   $("#clearScores").click(function (event) {
 
