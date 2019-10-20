@@ -27,6 +27,10 @@ body {
     font-weight: bold;
 }
 
+#clearScores {
+    margin: 30px;
+}
+
 #olDiv {
     text-align: center;
 }

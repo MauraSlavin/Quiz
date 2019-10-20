@@ -37,9 +37,9 @@ $("#timer").text("Timer not running; quiz not in progress.");
 
 console.log("Top of quiz.js.  Vars init.");
 // for testing...
-// localStorage.setItem("QUIZmms", "10");
-// localStorage.setItem("QUIZmms", "95");
-// localStorage.setItem("QUIZdns", "135");
+localStorage.setItem("QUIZmms", "10");
+ localStorage.setItem("QUIZmms", "95");
+  localStorage.setItem("QUIZdns", "135");
 
 
 function renderPage(question, questionNum) {   // change question and answer choices on Quiz page
@@ -291,12 +291,12 @@ $(document).ready(function () {     // when page is finished loading
     var h2HighScore = $("<h2>");
     h2HighScore.addClass("high-score-header");
     h2HighScore.text("High Scores");
-    $("body").append(h2HighScore);
+    $("#highScoresHdrDiv").append(h2HighScore);
     for (var key = 0; key < highScores.length; key++) {
       var scoreDiv = $("<div>");
       scoreDiv.addClass("high-score");
       scoreDiv.text(inits[key] + ":  " + highScores[key]);
-      $("body").append(scoreDiv);
+      $("#highScoresHdrDiv").append(scoreDiv);
     };  // of loop to append previous scores
 
 
@@ -417,7 +417,12 @@ $(document).ready(function () {     // when page is finished loading
   };     // of if QUIZpage is 2
 
 
+$("#clearScores").click (function(event) {
+  
+  localStorage.clear();
+  $(".high-score").remove();
 
+});
 
 
 

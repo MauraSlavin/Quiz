@@ -30,7 +30,7 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="highScoresHdrDiv">
 
         <h1 id="quizHeader" class="text-center">High Scores Page</h1>
         <div class="text-center" id="score"></div>
@@ -38,7 +38,14 @@
             <label id="initInput1" for="initInput">Please enter your initials:</label>
             <input type="text" id="initInput" name="initInput" required minlength="2" size="10">
         </div>
+</div>
 
+<div class="row">
+    <div class="col text-center">
+
+      <button type="button" class="btn btn-success btn-lg text-center" id="clearScores">Clear the High Scores</button>
+    </div> <!-- end of column -->
+  </div> <!-- end of row -->
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
