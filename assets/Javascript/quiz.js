@@ -11,14 +11,14 @@ var timer = timeLimit;  // set timer to the timelimite
 var gameNo = [];  // will have highest game number for each player (so new game will be stored with a higher gamenum)
 var inits = [];  // will have inits for each player (indicies correspond to gameNo array)
 var highScores = [];  // high score for each player
-var quizPage = localStorage.getItem("QUIZpage");  // 0: home page; 1: high scores; 2: high scores with prompt for initials
+var quizPage = localStorage.getItem("QUIZpage");  // 0: home page; 1: high scores; 2: score w/prompt for initials
 if (quizPage == null) { quizPage = 0; };  // the home page is the default if nothing is stored.
 localStorage.removeItem("QUIZpage");    // no longer need
 
 // if on High Scores page, but quizPage is still 0, then got here by player clicking "High Scores" on navbar,
-//    and quizPage should be 1 (High Scores page, but no score to display or prompt for inits needed)
+//    and quizPage should be 1 (High Scores list)
 if (isScoresPage && (quizPage == 0)) {
-  quizPage = 1;     // High Scores page, but no score to show or prompt for inits
+  quizPage = 1;     // High Scores list
 };   // of if 
 
 if ((quizPage == 0) || (quizPage == 1)) {    // don't display score or prompt for inits unless needed.
@@ -26,6 +26,10 @@ if ((quizPage == 0) || (quizPage == 1)) {    // don't display score or prompt fo
   console.log("Line 25:  Hide score & prompt; quizPage: " + quizPage);
   $("#score").hide();
   $("#pleaseEnter").hide();
+}
+else {   // if quizPage == 2 ( show score & prompt for inits)
+  $("#score").show();
+  $("#pleaseEnter").show();
 };
 
 
@@ -34,9 +38,9 @@ $("#timer").text("Timer not running; quiz not in progress.");
 
 console.log("Top of quiz.js.  Vars init.");
 // for testing...
-// localStorage.setItem("QUIZ000001mms", "10");
-// localStorage.setItem("QUIZ000002mms", "95");
-// localStorage.setItem("QUIZ000002dns", "135");
+// localStorage.setItem("QUIZmms", "10");
+// localStorage.setItem("QUIZmms", "95");
+// localStorage.setItem("QUIZdns", "135");
 
 
 function renderPage(question, questionNum) {   // change question and answer choices on Quiz page
@@ -52,6 +56,27 @@ function renderPage(question, questionNum) {   // change question and answer cho
   });   // end of forEach loop (for each question choice
 
 };        // end of renderPage function
+
+
+function orderScores(origScoresArray, origInitsArray) {
+
+  var maxIndex = origScoresArray.length;      // the length of all the arrays
+  var scoresArray = origScoresArray.slice();  // Make sure original variables don't get changed.
+  var initsArray = origInitsArray.slice();     // Make sure original variables don't get changed.
+  var newScoresArray = new Array(maxIndex);   // set size of new high scores array
+  var newInitsArray = new Array(maxIndex);    // set size of corresponding inits array
+  var index;                                  // index into array where highest remainging score is
+
+  for (var i = 0; i < maxIndex; i++) {        // for each high score...
+    index = scoresArray.indexOf(Math.max.apply(null, scoresArray));   // Find the index to the next highest score
+    newScoresArray[i] = Math.max(...scoresArray);           // put the next highest score in the next spot in the new array
+    newInitsArray[i] = initsArray[index];                   //  save the corresponding initials
+    scoresArray.splice(index, 1);                            // drop the highest score, and repeat to find the next highest score
+    initsArray.splice(index, 1);                             // ...  keeping the initials
+  };   //  of for i 0 to length of highScores & closes anoymous function
+
+  return [newScoresArray, newInitsArray];    // return the new arrays (can only return one thing, so they are both in an outer array)
+};  // of orderScores function
 
 
 function endGame() {       // prep to display page with player's score and score history
@@ -86,7 +111,8 @@ $(document).ready(function () {     // when page is finished loading
     // end game when time is up  (use clearinterval to stop timer if game ends before time is up)
     setTimeout(function () {
       endGame();
-    }, (timeLimit * 1000));   // timeLimit is the number of seconds the game lasts.
+    }, (timeLimit * 1000)
+    );   // timeLimit is the number of seconds the game lasts.
 
     // build the ol (list of question choices)
     for (var i = 0; i < questions[0].choices.length; i++) {
@@ -187,18 +213,16 @@ $(document).ready(function () {     // when page is finished loading
 
     });  // end of anonymous function 
 
-
-
   }); // of BeginQuiz function
 
 
-  if (quizPage == 1 || quizPage == 2) {   // on High Scores page; 1: don't show score & prompt for inits; 2: do show them
-    console.log("If quizPage is 1 or 2 (line 188). \nquizPage:  " + quizPage);
 
-    //  get all relavent data from localStorage //
 
-    // next few lines based on code from 
-    //    https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
+  // retrieve & display high scores
+  if (quizPage == 1) {   // on High Scores page; 1: high scores list; 2: score & prompt for inits; 0: home page/take quiz
+    console.log("If quizPage 1 (line 188). \nquizPage:  " + quizPage);
+
+    //  get all relevant data from localStorage //
 
     var
       keys = Object.keys(localStorage),  // array with all the keys in it
@@ -221,78 +245,18 @@ $(document).ready(function () {     // when page is finished loading
       // if the localStorage key is QUIZtimer, then the property is the time left in the game
       console.log("keys[key]:  " + keys[key]);
       console.log("values:  " + values + ";   values[key]:  " + values[key]);
-      if (keys[key].startsWith("QUIZtimer")) {  // timer (score) for current player
-        timer = values[key];
-        localStorage.removeItem("QUIZtimer");  // timer is no longer needed in localStorage
-        // show score & prompt for initials if needed, now that the timer is retrieved from localStorage
-        if (quizPage == 2) {   // prompt for inits needed (also show score)
-          //  $("#score").show();
-          //  $("#pleaseEnter").show();
-          //  alert("css is about to be changed");
-          //     alert("Line 214:  SHOW score & prompt; quizPage: " + quizPage);
-          console.log("Line 214:  SHOW score & prompt; quizPage: " + quizPage);
-          $("#score").text("Your score is: " + timer).show();
-          $("#pleaseEnter").show();
-          // $("#score").style.removeProperty("display");
-          //      $("#pleaseEnter").style.removeProperty("display");
-          //    $("#score").css("display", "block");
-          //     $("#initInput1").css("display", "block");
-          //   $("#initInput1").css("display", "block");
-          //    $("#pleaseEnter").css("display", "block");
-        }   // of quizPage = 1 or 2 (prompt for inits & show score)
-
-        else if ((quizPage == 0) || (quizPage == 1)) {                      // show neither score nor prompt for inits
-          //     alert("Line 225:  Hide score & prompt; quizPage: " + quizPage);
-          console.log("Line 225:  Hide score & prompt; quizPage: " + quizPage);
-          $("#score").hide();
-          $("#pleaseEnter").hide();
-          //  $("#score").hide();
-          //  $("#pleaseEnter").hide();
-          //  $("#pleaseEnter").css("display","none");
-          //      $("#score").style.removeProperty("display");
-          //    $("#pleaseEnter").style.removeProperty("display");
-          //  alert("css is about to be changed");
-          //$("#score").css("display", "none");
-          //     $("#initInput1").css("display", "none");
-          //   $("#initInput").css("display", "none");
-          //      $("#pleaseEnter").css("display", "none");
-        }          // of quizPage = 0... no prompt or inits
-
-        else {   // should never get here
-          //     alert("ERROR:  quizPage should be 0, 1, or 2.\nquizPage:  " + quizPage + "\nline 204 of quiz.js.");
-
-        };
-      }  // of if QUIZtimer key
 
 
-      // if localStorage key starts with QUIZ (but not QUIZtimer), the property is a score (unique inits + game # key for each game)
-      else if (keys[key].startsWith("QUIZ")) {
-        console.log("QUIZ######abc:  " + keys[key]);
-        init = keys[key].substr(10);   // initials start in character 10 of the key (first is 0th position)
-        currGameNo = parseInt(keys[key].substr(4, 6));  // game number is in position 4-9 (starts at 0;QUIZ is 0-3)
-        var newInitPos = inits.indexOf(init);   // -1 if new; index into inits, gameNo & scores if found
-        console.log("init: " + init + "\ncurrGameNo:  " + currGameNo + "/nnewInitPos:" + newInitPos);
-        // localStorage has a score for a new player
-        if (newInitPos == -1) {  // first time we come across these initials
-          console.log("New player...");
-          inits.push(init);
-          gameNo.push(parseInt(keys[key].substr(4, 6)));   // game number is in positions 4 - 9
-          highScores.push(parseInt(values[key]));
-          scores[init] = [values[key], []];  // add the new key with the first. + [] then remove to force it to be an array
-          console.log("    inits:  " + inits + "\n    gameNo:  " + gameNo + "\n    highScores:  " + highScores + "\n    scores:  " + scores);
-          //   scores[init] = scores[init][0];   //  remove [], keeping it as an array
-        } // of init NOT in inits (new initials)
+      // if localStorage key starts with QUIZ (but not QUIZtimer or QUIZpage), the property is a score (unique inits + game # key for each game)
+      if (keys[key].startsWith("QUIZ") && (!keys[key].startsWith("QUIZtimer")) && (!keys[key].startsWith("QUIZpage"))) {
+        console.log("QUIZabc:  " + keys[key]);
+        init = keys[key].substr(4);   // initials start in character 4 of the key (first is 0th position)
+        inits.push(init);
+        highScores.push(parseInt(values[key]));
 
-        // localStorage has a score for a returning player
-        else if ((scores[init][scores[init].length - 1].length != 0)) {  // skip null enteries (shouldn't be any)
-          console.log("repeat player:");
-          // if these inits are already in Score, push the new score onto that element
-          scores[init].push(values[key]);  // add to list of scores for current player
-          gameNo[newInitPos] = Math.max(gameNo[newInitPos], currGameNo);
-          highScores[newInitPos] = Math.max(highScores[newInitPos], parseInt(values[key]));
-          console.log("    inits:  " + inits + "\n    gameNo:  " + gameNo + "\n    highScores:  " + highScores + "\n    scores:  " + scores);
-        };  // of already saw these initials & not null
-      }; // else QUIZ gameNum score record
+
+
+      }; // if QUIZinit score record
     };  // for each row read from local Storage
 
     //  number of objects:   Object.keys(scores).length;
@@ -310,96 +274,158 @@ $(document).ready(function () {     // when page is finished loading
     //console.log("Line 309:  SHOW score & prompt; quizPage: " + quizPage);
     //$("#pleaseEnter").show();
 
-    // if needed, display score and prompt for inits; and display high scores.
-    if (quizPage == 2) {
-      // build html to prompt for initials and return value
-
-      //    $("#pleaseEnter").show();    //  show prompt for initials
-      //   alert("css is about to be changed");
-      $("#score").show();
-      $("#pleaseEnter").show();
-      //     $("#initInput").css("display", "block");    //  show prompt for initials
-      //   $("#initInput2").css("display", "block");    //  show prompt for initials
-      // $("#pleaseEnter").css("display", "block");
-      document.addEventListener("keydown", function (event) {
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == 13) {
-          console.log(event.which);  // 13 is enter
-
-          // get the inits (init) the player entered, and clear the input field
-          init = $("#initInput").val();  // get inits from input 
-          $("#initInput[type=text], textarea").val("");  //  clear input field
-
-          // save the score in localStorage.
-          if (inits.indexOf(init) == -1) {  // first game for these inits
-            localStorage.setItem("QUIZ000001" + inits, timer.toString());
-          }
-          else {            //  not first score saved for this user
-            // get correct game number - not first time player!
-            // add one to gameNo, format as 6 chars with leading 0s; append timer
-            // key is "QUIZ" + six digit game number (left padded w 0s) + initials
-            var keyText = ("000000" + (gameNo[inits.indexOf(init)] + 1)).substr(-6, 6);
-            var keyText = "QUIZ" + keyText + init;
-            localStorage.setItem(keyText, timer.toString());
-          };   // of else - not first game
-
-
-          // hide score message from page, since we have the input!
-          $("#score").hide();
-          $("#pleaseEnter").hide();
-
-          // add new score to High Scores
 
 
 
-        };  // of if keycode is 13 (enter)
-      });   // of event listener for keydown (13)
-    };  // of if promptForInits
+
+
 
 
     //  Put scores in order of High score first:  
     //  inits & highScores arrays changed; 
     //  orderOfScores created (index into both arrays in order, highest score first.)
 
-  
-    var tempHighScores = highScores;
-    var tempInits = inits;
-    var maxIndex = highScores.length;
-    var newHighScores = new Array(maxIndex);
-    var newInits = new Array(maxIndex);
-    var index;
-  
-    for (var i = 0; i < maxIndex; i++) {
-      index = tempHighScores.indexOf(Math.max.apply(null,tempHighScores));
-      newHighScores[i] = Math.max(...tempHighScores);
-      newInits[i] = tempInits[index];
-      tempHighScores.splice(index,1);
-      tempInits.splice(index,1);
-     };   //  of for i 0 to length of highScores & closes anoymous function
-
-    
+    var newArrays = orderScores(highScores, inits);
+    highScores = newArrays[0];
+    inits = newArrays[1];
+    // display high scores
+    var h2HighScore = $("<h2>");
+    h2HighScore.addClass("high-score-header");
+    h2HighScore.text("High Scores");
+    $("body").append(h2HighScore);
+    for (var key = 0; key < highScores.length; key++) {
+      var scoreDiv = $("<div>");
+      scoreDiv.addClass("high-score");
+      scoreDiv.text(inits[key] + ":  " + highScores[key]);
+      $("body").append(scoreDiv);
+    };  // of loop to append previous scores
 
 
+  };   // if high Scores page (quizPage is 1 - display HighScores page)
 
 
-    if ((quizPage == 1) || (quizPage == 2)) {
-      // display high scores
-      var h2HighScore = $("<h2>");
-      h2HighScore.addClass("high-score-header");
-      h2HighScore.text("High Scores");
-      $("body").append(h2HighScore);
-      for (var key = 0; key < maxIndex; key++) {
-        var scoreDiv = $("<div>");
-        scoreDiv.addClass("high-score");
-        scoreDiv.text(newInits[key] + ":  " + newHighScores[key]);
-        $("body").append(scoreDiv);
-      };  // of loop to append previous scores
-    };  // of quizPage == 1 or 2 then display high scores
 
-  };   // if high Scores page (quizPage is 1 or 2 - display HighScores page)
+
+  if (quizPage == 2) {   // on High Scores page; 1: high scores list; 2: score & prompt for inits (0: home page/take quiz)
+    console.log("If quizPage is 2 (line 188). \nquizPage:  " + quizPage);
+
+    //  get all relevant data from localStorage //
+
+
+    var
+      // keys = Object.keys(localStorage),  // array with all the keys in it
+      // values = Object.values(localStorage),  // array with all the corresponding properties in it
+      init;         // initials in current local Storage entry most recently read
+
+    // of else no prompt for inits
+
+
+    // If row is a combination of initials and score
+    //   would be stored with a key of QUIZabc, and the property is the score.  abc is the inits. high score is the value
+    // The key "QUIZtimer" stores the current timer (score) for the current game;
+    // the key "QUIZpage" stores the 0 for home page; 1 for scores page without score/prompt for inits; 2 for scores page with score/prompt.
+    // QUIZpage is stored just before loading new page, and read/removed right after loading new page.
+    // if the localStorage key is QUIZtimer, then the property is the time left in the game
+
+    timer = localStorage.getItem("QUIZtimer")
+    localStorage.removeItem("QUIZtimer");  // timer is no longer needed in localStorage
+    // show score & prompt for initials if needed, now that the timer is retrieved from localStorage
+
+    console.log("Line 214:  SHOW score & prompt; quizPage: " + quizPage);
+    $("#score").text("Your score is: " + timer);
+
+    // $("#score").style.removeProperty("display");
+    //      $("#pleaseEnter").style.removeProperty("display");
+    //    $("#score").css("display", "block");
+    //     $("#initInput1").css("display", "block");
+    //   $("#initInput1").css("display", "block");
+    //    $("#pleaseEnter").css("display", "block");
+
+
+
+
+
+    //  number of objects:   Object.keys(scores).length;
+
+    // for (key = 0; key < Object.keys(scores).length; key++) {
+    // console.log("Key:  " + key);
+    //console.log(scores.key);
+
+    // };   // of for each object in scores
+
+
+
+    //  timer = localStorage.getItem("QUIZtimer");    // retrieve timer (score) from local storage
+    //  alert("Line 308:  SHOW score & prompt; quizPage: " + quizPage);
+    //console.log("Line 309:  SHOW score & prompt; quizPage: " + quizPage);
+    //$("#pleaseEnter").show();
+
+    // if needed, display score and prompt for inits; and display high scores.
+
+    // build html to prompt for initials and return value
+
+    //    $("#pleaseEnter").show();    //  show prompt for initials
+    //   alert("css is about to be changed");
+
+    //     $("#initInput").css("display", "block");    //  show prompt for initials
+    //   $("#initInput2").css("display", "block");    //  show prompt for initials
+    // $("#pleaseEnter").css("display", "block");
+    document.addEventListener("keydown", function (event) {
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if (keycode == 13) {
+        console.log(event.which);  // 13 is enter
+
+        // get the inits (init) the player entered, and clear the input field
+        init = $("#initInput").val();  // get inits from input 
+        $("#initInput[type=text], textarea").val("");  //  clear input field
+
+        // add to highScores and inits arrays
+        // inits.push(init);
+        // highScores.push(parseInt(timer));  // timer is a string here
+
+        //   var newArrays = orderScores(highScores, inits);
+        // highScores = newArrays[0];
+        //   inits = newArrays[1];
+
+        // save the score in localStorage.
+        if (inits.indexOf(init) == -1) {  // first game for these inits
+          localStorage.setItem("QUIZ" + init, timer.toString());
+        }
+        else {            //  not first score saved for this user
+          // get correct game number - not first time player!
+          // add one to gameNo, format as 6 chars with leading 0s; append timer
+          // key is "QUIZ" + six digit game number (left padded w 0s) + initials
+          var oldHighScore = localStorage.getItem("QUIZ" + init);
+          if (timer > oldHighScore) {
+            localStorage.setItem("QUIZ" + init, timer.toString());
+          };
+
+
+        };   // of else - not first game
+
+
+
+        localStorage.setItem("QUIZpage", 1);  // display high scores next
+
+
+        window.open("./highScores.html", "_self");  // go to highScores page (starts javascript from beginning)
+
+
+
+      };  // of if keycode is 13 (enter)
+    });   // of event listener for keydown (13)
+
+  };     // of if QUIZpage is 2
+
+
+
+
+
+
+
 
 }); // end of document ready
 
-//timer on page
+
 //clear highscores
-// HIGH score
+
