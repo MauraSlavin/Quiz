@@ -2,11 +2,35 @@ body {
     background-image: url("../images/Wood.jpg");
 }
 
+
+p, #score, #pleaseEnter {
+    color: green;
+    font-size: 22px;
+    margin: auto;
+    padding: 0;
+    text-align: center;
+}
+
 .hover {
     color: white;
     background-color: green;
 }
 
+.high-score, .high-score-header {
+    height: 1.5em;
+    color: darkgreen;
+    font-weight: bold;
+    font-size: 20px;
+    margin: auto;
+    text-align: center;
+}
+
+.high-score-header {
+    font-size: 25px;
+    height: 2em;
+    margin-top: 40px;
+    text-decoration: underline;
+}
 #message {
     width: 50%;
 }
@@ -31,24 +55,11 @@ body {
     margin: 30px;
 }
 
-#olDiv {
-    text-align: center;
-}
-
 #answer-list {
     width: 60%;
     text-align: center;
     margin-top: 20px;
     list-style-position: inside;    
-}
-
-
-p, #score, #pleaseEnter {
-    color: green;
-    font-size: 22px;
-    margin: auto;
-    padding: 0;
-    text-align: center;
 }
 
 #timer {
@@ -60,21 +71,3 @@ p, #score, #pleaseEnter {
     font-weight: bold;
     margin: 20px;
 }
-
-
-.high-score, .high-score-header {
-    height: 1.5em;
-    color: darkgreen;
-    font-weight: bold;
-    font-size: 20px;
-    margin: auto;
-    text-align: center;
-}
-
-.high-score-header {
-    font-size: 25px;
-    height: 2em;
-    margin-top: 40px;
-    text-decoration: underline;
-}
-
